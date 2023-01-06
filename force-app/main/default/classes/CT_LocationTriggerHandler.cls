@@ -10,6 +10,7 @@ public with sharing class CT_LocationTriggerHandler {
         for (Location__c p : newRecords) {
             if(oldRecordMap.get(p.Id).Status__c != p.Status__c){
                 p.Status_Update_Date__c = Date.today();
+                
             }
         }
     }
