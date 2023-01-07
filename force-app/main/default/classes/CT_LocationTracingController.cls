@@ -22,9 +22,11 @@ public with sharing class CT_LocationTracingController {
     }
 
     public static List<Location_Tracing__c> getLocationsByLocationIds(Set<Id> locationIds){
-        return    [SELECT  Id, Visit_Date__c, Location__c, Person__r.Name, Person__r.Token__c,Person__r.Health_Status__c, Name
+        return   [SELECT Id, Visit_Date__c, Location__c, Person__c
                     FROM Location_Tracing__c
-                    WHERE Location__c IN :locationIds AND Person__r.Health_Status__c = 'Green' AND Visit_Date__c = LAST_N_DAYS:10
+                    WHERE Location__c IN :locationIds 
+                    AND (Person__r.Health_Status__c = 'Green')
+                    AND Visit_Date__c = LAST_N_DAYS:10
                     ORDER BY Visit_Date__c DESC
                     NULLS LAST
                     LIMIT 100];
