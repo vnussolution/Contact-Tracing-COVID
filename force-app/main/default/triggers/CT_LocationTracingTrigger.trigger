@@ -1,4 +1,4 @@
-trigger CT_LocationTrigger on Location__c (before insert, before update, after update) {
+trigger CT_LocationTracingTrigger on Location__c (before insert, before update, after update) {
     switch on Trigger.operationType {
         when BEFORE_INSERT {
             CT_LocationTriggerHandler.BEFORE_INSERT(Trigger.new);
@@ -13,13 +13,11 @@ trigger CT_LocationTrigger on Location__c (before insert, before update, after u
            
         }
         when AFTER_UPDATE{
-            CT_LocationTriggerHandler.AFTER_UPDATE(Trigger.new,Trigger.oldMap);
         }
         when AFTER_DELETE{
         }
         when AFTER_UNDELETE{
 
         }
-
     }
 }
