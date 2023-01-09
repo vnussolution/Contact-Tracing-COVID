@@ -1,10 +1,10 @@
-trigger CT_LocationTracingTrigger on Location__c (before insert, before update, after update) {
+trigger CT_PeopleTracingTrigger on People_Tracing__c (before insert) {
     switch on Trigger.operationType {
         when BEFORE_INSERT {
-            CT_LocationTriggerHandler.BEFORE_INSERT(Trigger.new);
+            CT_PeopleTracingTriggerHandler.BEFORE_INSERT(Trigger.new);
         }
         when BEFORE_UPDATE {
-            CT_LocationTriggerHandler.BEFORE_UPDATE(Trigger.new,Trigger.oldMap);
+           
         }
         when BEFORE_DELETE{
 
@@ -19,5 +19,6 @@ trigger CT_LocationTracingTrigger on Location__c (before insert, before update, 
         when AFTER_UNDELETE{
 
         }
+
     }
 }

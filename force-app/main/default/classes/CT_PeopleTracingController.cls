@@ -112,7 +112,7 @@ public with sharing class CT_PeopleTracingController {
 
         Map<Id, Set<Id>> mapOfExistingRecords = new Map<Id, Set<Id>>();
 
-        List<People_Tracing__c> existingRecords = [SELECT Id, Contact_Date__c, Contact_Type__c, Person_2__c, Person_1__c 
+        List<People_Tracing__c> existingRecords = [SELECT Id, Name, Contact_Date__c, Contact_Type__c, Person_2__c, Person_1__c 
                                                     FROM People_Tracing__c
                                                     WHERE Person_1__c IN :peopleSet OR Person_2__c IN :peopleSet];
 

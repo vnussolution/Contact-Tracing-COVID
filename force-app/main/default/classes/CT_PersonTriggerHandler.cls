@@ -1,6 +1,5 @@
 public with sharing class CT_PersonTriggerHandler {
     
-    
     public static void BEFORE_INSERT(List<Person__c> newRecords){
         for (Person__c p : newRecords) {
             p.Health_Status__c = 'Green';
