@@ -2,7 +2,7 @@
 public with sharing class ContactTriggerHandlerTest {
 
     ////////
-    /// get test coverage sfdx force:apex:test:run --tests ContactTriggerHandlerTest --resultformat human -c
+    /// get test coverage =  sfdx force:apex:test:run --tests ContactTriggerHandlerTest --resultformat human -c
 
     //////
 
@@ -134,5 +134,62 @@ public with sharing class ContactTriggerHandlerTest {
         System.assertEquals(5,allContacts.size());
     }
 
-     
+
+    @isTest
+    public static void afterDeleteHandlerTest(){
+        List<Contact> contactList = [SELECT Id, LastName FROM Contact WHERE Name IN('Test Contact 1', 'Test Contact 5')];
+
+        Test.startTest();
+        delete contactList;
+        Test.stopTest();
+
+
+        List<Account> allAccounts = [SELECT Id, Name, Active_Contacts__c FROM Account];
+        System.assertEquals(2, allAccounts.size());
+
+        for (Account ac : allAccounts) {
+            if (ac.Name == 'Test 1') {
+                System.assertEquals(1, ac.Active_Contacts__c);
+            
+            }
+            if(ac.Name == 'Test 2'){
+                System.assertEquals(0, ac.Active_Contacts__c);
+            }
+
+        }
+
+        contactList = [SELECT Id FROM Contact];
+        System.assertEquals(3, contactList.size());
+
+    }
+
+
+    @isTest
+    public static void afterUnDeleteHandlerTest(){
+        List<Contact> contactList = [SELECT Id, LastName FROM Contact WHERE Name IN('Test Contact 1', 'Test Contact 5')];
+
+        Test.startTest();
+        delete contactList;
+        Test.stopTest();
+
+        undelete contactList;
+
+        List<Account> allAccounts = [SELECT Id, Name, Active_Contacts__c FROM Account];
+        System.assertEquals(2, allAccounts.size());
+
+        for (Account ac : allAccounts) {
+            if (ac.Name == 'Test 1') {
+                System.assertEquals(2, ac.Active_Contacts__c);
+            
+            }
+            if(ac.Name == 'Test 2'){
+                System.assertEquals(0, ac.Active_Contacts__c);
+            }
+
+        }
+
+        contactList = [SELECT Id FROM Contact];
+        System.assertEquals(5, contactList.size());
+
+    }
 }
