@@ -1,41 +1,6 @@
 public with sharing class ContactTriggerHandler {
     
     
-    public static void BEFORE_INSERT(List<Contact> newRecords){
-
-    }
-
-    public static void AFTER_INSERT_MySolution(List<Contact> newRecords){
-       
-        Map<Id, Integer> accountCounterMap = new Map<Id,Integer>();
-        List<Account> accountList = new List<Account>();
-
-        for(Contact c : newRecords){
-            if (c.Active__c == true  &&  String.isNotBlank(c.AccountId)) {
-                if(!accountCounterMap.containsKey(c.AccountId)){
-                    accountCounterMap.put(c.AccountId, 1);
-                } else{
-                    Integer counter = accountCounterMap.get(c.AccountId);
-                    accountCounterMap.put(c.AccountId, ++counter);
-                }
-            }
-        }
-
-        List<Account> accounts = [SELECT Id , Active_Contacts__c FROM Account WHERE Id IN :accountCounterMap.keySet()];
-
-        System.debug('111');
-        for (Account ac : accounts) {
-            Decimal counter         =   ac.Active_Contacts__c == null ? 0: ac.Active_Contacts__c;
-            System.debug('accountCounterMap.get(ac.Id) = ' + accountCounterMap.get(ac.Id));
-            System.debug('counter' + counter);
-            ac.Active_Contacts__c   =   counter + accountCounterMap.get(ac.Id);
-            accountList.add(ac);
-        }
-
-        update accountList;
-        System.debug('Contact trigger AFTER_INSERT');
-    }
-
     public static void AFTER_INSERT_UdemySolution(List<Contact> triggeredRecords){
         Set<Id> accountIds = new Set<Id>();
 
@@ -86,6 +51,41 @@ public with sharing class ContactTriggerHandler {
         update accountsToUpdate.values();
     }
 
+
+    public static void BEFORE_INSERT(List<Contact> newRecords){
+
+    }
+
+    public static void AFTER_INSERT_MySolution(List<Contact> newRecords){
+       
+        Map<Id, Integer> accountCounterMap = new Map<Id,Integer>();
+        List<Account> accountList = new List<Account>();
+
+        for(Contact c : newRecords){
+            if (c.Active__c == true  &&  String.isNotBlank(c.AccountId)) {
+                if(!accountCounterMap.containsKey(c.AccountId)){
+                    accountCounterMap.put(c.AccountId, 1);
+                } else{
+                    Integer counter = accountCounterMap.get(c.AccountId);
+                    accountCounterMap.put(c.AccountId, ++counter);
+                }
+            }
+        }
+
+        List<Account> accounts = [SELECT Id , Active_Contacts__c FROM Account WHERE Id IN :accountCounterMap.keySet()];
+
+        System.debug('111');
+        for (Account ac : accounts) {
+            Decimal counter         =   ac.Active_Contacts__c == null ? 0: ac.Active_Contacts__c;
+            System.debug('accountCounterMap.get(ac.Id) = ' + accountCounterMap.get(ac.Id));
+            System.debug('counter' + counter);
+            ac.Active_Contacts__c   =   counter + accountCounterMap.get(ac.Id);
+            accountList.add(ac);
+        }
+
+        update accountList;
+        System.debug('Contact trigger AFTER_INSERT');
+    }
 
     public static void testAccountContactActiveTriggers(){
 
