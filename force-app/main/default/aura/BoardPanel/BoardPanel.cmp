@@ -1,0 +1,46 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="BoardPanelController">
+    <aura:attribute name="modes" type="List" default="[
+    {'label': 'Easy', 'value': 'easy'},
+    {'label': 'Medium', 'value': 'medium'},
+    {'label': 'hard', 'value': 'hard'},
+    ]"/>
+    <aura:attribute name="selectedMode" type="String" access="public"/>
+    <aura:attribute name="reshuffleDisabled" type="Boolean" default="true" />
+    <aura:handler event="c:ResultApplicationEvent" action="{!c.onResultHandler}"></aura:handler>
+
+    <lightning:card title="Word Shuffle">
+        <lightning:layout horizontalAlign="center" multipleRows="true">
+            <lightning:layoutItem padding="around-small">
+                <lightning:combobox variant="label-hidden" name="gameMode" label="Game Mode" value="inProgress" 
+                    placeholder="Select Game Mode"  options="{!v.modes}" title="Brand"
+                    aura:id="gameMode"
+                ></lightning:combobox>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small">
+                <lightning:button name="gameMode" label="Start New Game" value="inProgress" title="Start New Game " 
+                    variant="brand" onclick="{!c.startGame}"
+                    aura:id="startNewGameButton"
+                ></lightning:button>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small">
+                <lightning:button label="Reshuffle" disabled="{!v.reshuffleDisabled}" title="Reshuffle" onclick="{!c.reshuffleBoard}"></lightning:button>
+            </lightning:layoutItem>
+            <aura:if isTrue="{!v.selectedMode != null}">
+                <lightning:layoutItem size="12" >
+                    <c:board aura:id="boardComp" mode="{!v.selectedMode}"> </c:board>
+                </lightning:layoutItem>
+                <aura:set attribute="else">
+                    <lightning:layoutItem size="12" padding="around-small">
+                        Select Game mode to play
+
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:if>
+            
+        </lightning:layout>
+
+        selected mode is: {!v.selectedMode}
+    </lightning:card>
+
+</aura:component>	
+   

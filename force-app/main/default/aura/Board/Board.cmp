@@ -1,0 +1,45 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+
+    <aura:attribute name="words"        type="List" access="public" />
+    <aura:attribute name="shownwords" type="List" access="public"  />
+    <aura:attribute name="winWord" type="String" access="private" />
+    <aura:attribute name="clickCount" type="Integer" default="0" access="private" />
+    <aura:attribute name="mode" type="String" default="medium" access="public" />
+    <aura:attribute name="blockSize" type="Integer" default="3" access="private" />
+    <aura:attribute name="result" type="String" />
+    <aura:attribute name="boardDisabled" type="Boolean" default="false" />
+    <aura:attribute name="messageFromEvent" type="String"/>
+    <aura:attribute name="numEvents" type="Integer" default="0"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="cmpEventBlock" event="c:blockEvent" action="{!c.blockClickHandler}"/>
+    <aura:method name="startGameMethod" action="{!c.doInit}"></aura:method>
+    <aura:method name="reshuffleBoard" action="{!c.reshuffleBoard}"></aura:method>
+
+
+    <div class="board">
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" >
+                WORD: <span class="win-word">{!v.winWord}</span> 
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" class="slds-text-heading--label">
+                Moves left: {! (3 - v.clickCount)}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small">
+                <div class="sldx-text-heading_medium">{!v.result}</div>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <lightning:layout multipleRows="true">
+            <aura:iteration items="{!v.words}" var="wordObj">
+                <lightning:layoutItem size="{!v.blockSize}" padding="around-small">
+                    <c:block aura:id="wordid" label="{!wordObj.word}" open="{!wordObj.open}" ></c:block>
+                </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+
+        <aura:if isTrue="{!v.boardDisabled}">
+            <div class="board-disabled"></div>
+        </aura:if>
+        
+    </div>
+</aura:component>	
