@@ -27,7 +27,7 @@
             </lightning:layoutItem>
             <aura:if isTrue="{!v.selectedMode != null}">
                 <lightning:layoutItem size="12" >
-                    <c:board aura:id="boardComp" mode="{!v.selectedMode}"> </c:board>
+                    <c:Board aura:id="boardComp" mode="{!v.selectedMode}"> </c:Board>
                 </lightning:layoutItem>
                 <aura:set attribute="else">
                     <lightning:layoutItem size="12" padding="around-small">
@@ -42,5 +42,4 @@
         selected mode is: {!v.selectedMode}
     </lightning:card>
 
-</aura:component>	
-   
+</aura:component>

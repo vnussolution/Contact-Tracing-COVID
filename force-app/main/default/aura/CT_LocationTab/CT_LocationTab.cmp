@@ -1,0 +1,75 @@
+<aura:component controller="CT_LocationTabController" implements="force:appHostable">
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="locations" type="List" />
+    <aura:attribute name="locationInfo" type="object" />
+    <aura:attribute name="locationFound" type="boolean" default="false" />
+
+    <aura:attribute name="options" type="List" access="PRIVATE"/>
+    <aura:attribute name="selectedValue" type="String" access="PRIVATE"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+
+    <div class="main-container">
+        <div class="search-panel bbbb ccc dddd">
+            <lightning:select name="locationId" class="display-inline" variant="label-inline"  label="Select a location:" aura:id="locationId" onchange="{! c.onChange }">
+                <aura:iteration items="{!v.options}" var="option">
+                    <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                </aura:iteration>
+            </lightning:select>
+
+            <lightning:button label="Search location" title="Search location" onclick="{! c.locationSearchHandler}" variant="neutral" class="slds-m-left_medium"></lightning:button>
+        
+        </div>
+        <aura:if isTrue="{!v.locationFound}">
+            <div class="card-container slds-align_absolute-center">
+                <div class="header-panel">
+                    <div class="{! v.locationInfo.status + ' health-header'}">
+                        {!v.locationInfo.name}, Location health status is {!v.locationInfo.status}
+                    </div>
+                    <div class="subheader-panel">
+                        <div class="subheader-row">
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Name</div>
+                                <div class="row-item-value">{!v.locationInfo.name}</div>
+                            </div>
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Address</div>
+                                <div class="row-item-value">{!v.locationInfo.address}</div>
+                            </div>
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Pincode</div>
+                                <div class="row-item-value">{!v.locationInfo.pincode}</div>
+                            </div>
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Status Update on</div>
+                                <div class="row-item-value">{!v.locationInfo.status}</div>
+                            </div>
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Visit Date</div>
+                                <div class="row-item-value">{!v.locationInfo.statusUpdateOn}</div>
+                            </div>
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Score</div>
+                                <div class="row-item-value">{!v.locationInfo.score}</div>
+                            </div>
+                            <div class="row-item">
+                                <div class="row-item-label slds-text-title">Contacts in last 30 days</div>
+                                <div class="row-item-value">{!v.locationInfo.locationCount}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="slds-text-heading_medium slds-p-left_xx-small">Recent Contacts</div>
+                    <div class="contacts">
+                        <lightning:datatable keyField="id" data="{!v.locationInfo.contacts}" columns="{!v.columns}" hiddenCheckboxColumn="true"></lightning:datatable>
+                    </div>
+                </div>
+            </div>
+
+        </aura:if>
+    </div>
+</aura:component>

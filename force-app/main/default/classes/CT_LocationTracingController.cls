@@ -5,7 +5,7 @@ public with sharing class CT_LocationTracingController {
 
     public static List<Location_Tracing__c> getVisitors(String locationid){
         return    [SELECT Id, Visit_Date__c, Location__c, Person__r.Name, Person__r.Token__c,Person__r.Health_Status__c, Name
-                    FROM Location_Tracing__c
+                    FROM Location_Tracing__c 
                     WHERE Location__c = :locationid
                     ORDER BY Visit_Date__c DESC
                     NULLS LAST

@@ -1,0 +1,44 @@
+<aura:component  implements="flexipage:availableForAllPageTypes,force:appHostable" controller="BoardPanelController">
+    <aura:attribute name="scope" type="String" default="person"/>
+    <aura:attribute name="headerTitle" type="String" default="Person View"/>
+
+    <aura:registerEvent name="componentChangeLabelEvent" type="c:CT_ChangeLabelEvent"/>
+
+    <section class="container">
+        <lightning:layout multipleRows="true" class="abcd">
+            <lightning:layoutItem size="12">
+                <c:CT_HealthAdminHeader headerTitle="{!v.headerTitle}" scope="{!v.scope}" aura:id="health-header"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12">
+                <lightning:tabset onselect="{!c.handleSelect}" variant="vertical">
+                    <lightning:tab label="Person View" id="person_view"  >
+                        <lightning:layout >
+                            <lightning:layoutItem size="8">
+                                <c:CT_RecentChanges scope="person" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4">
+                                <c:CT_PersonView />
+                            </lightning:layoutItem>
+                        </lightning:layout>
+
+
+                        
+                    </lightning:tab>
+                    <lightning:tab label="Location View" id="location_view"  >
+                        <lightning:layout >
+                            <lightning:layoutItem size="8">
+                                <c:CT_RecentChanges scope="location"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4">
+                                <c:CT_LocationView />
+                            </lightning:layoutItem>
+                        </lightning:layout>
+
+                    </lightning:tab>
+    
+                </lightning:tabset>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </section>
+
+</aura:component>

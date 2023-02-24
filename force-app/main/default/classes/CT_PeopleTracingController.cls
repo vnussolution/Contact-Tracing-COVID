@@ -92,9 +92,11 @@ public with sharing class CT_PeopleTracingController {
     }
 
     public static List<People_Tracing__c> getTraces(String recordId){
-        return    [SELECT Contact_Type__c, Contact_Date__c, Id, Name, Person_1__c,Person_1__r.Name, Person_2__c,Person_2__r.Name
+        return    [SELECT Contact_Type__c, Contact_Date__c, Id, Name, Person_1__c,Person_1__r.Name,Person_1__r.Health_Status__c
+                            ,Person_1__r.Token__c, Person_2__c,Person_2__r.Name, Person_2__r.Health_Status__c,Person_2__r.Token__c
                     FROM People_Tracing__c
-                    WHERE Person_1__c = :recordId OR Person_2__c = :recordId
+                    WHERE (Person_1__c = :recordId OR Person_2__c = :recordId)
+                    //AND Contact_Date__c = LAST_N_DAYS:30
                     ORDER BY Contact_Date__c DESC
                     NULLS LAST
                     LIMIT 100];

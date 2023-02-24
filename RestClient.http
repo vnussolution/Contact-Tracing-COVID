@@ -1,0 +1,11 @@
+POST https://home-bd-dev-ed.develop.lightning.force.com/services/data/v53.0/sobjects/Cloud_News__e
+content-type: application/json
+
+
+POST https://home-bd-dev-ed.develop.lightning.force.com/services/data/v53.0/sobjects/Order_Event__e
+
+content-type: application/json
+{
+    Has_Shipped__c:true,
+    Order_Number__c:'1234566'
+}

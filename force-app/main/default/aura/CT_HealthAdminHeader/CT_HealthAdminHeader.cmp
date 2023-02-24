@@ -1,0 +1,70 @@
+<aura:component controller="CT_HealthHeaderController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="scope" type="String" default="person"/>
+    <aura:attribute name="headerTitle" type="String" default="Person View"/>
+    <aura:attribute name="count" type="Object" default=""/>
+    <aura:handler name="cmpEvent" event="c:CT_ChangeLabelEvent" action="{!c.handleChangeLabelEvent}"/>
+    <aura:method name="fetchCount" action="{!c.fetchCount}"></aura:method>
+
+    <div class="slds-page-header slds-page-header_record-home">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-opportunity">
+
+                            <lightning:icon iconName="standard:queue" alternativeText="Contact Tracing" title="Contact Tracing">
+                            </lightning:icon>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <span>Contact Tracing</span>
+                                <h1>
+                                    <span class="slds-page-header__title slds-truncate" title="Person View">{!v.headerTitle}</span>
+                               </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header__col-actions">
+                <div class="slds-page-header__controls">
+                    <div class="slds-page-header__control">
+                        <ul class="slds-button-group-list">
+                            <li>
+                                <button class="slds-button slds-button_neutral" onclick="{!c.createRecord}">
+                                    <lightning:icon iconName="utility:add" alternativeText="Add New" title="Add New" size="x-small">
+                                    </lightning:icon> Add New
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-page-header__row slds-page-header__row_gutters">
+            <div class="slds-page-header__col-details">
+                <ul class="slds-page-header__detail-row">
+                    <li class="slds-page-header__detail-block">
+                        <div class="header-item green"> Green</div>
+                        <div class="header-item green">{! v.count.Green}</div>
+                    </li>
+                    <li class="slds-page-header__detail-block">
+                        <div class="header-item yellow" >Yellow</div>
+                        <div class="header-item yellow">{! v.count.Yellow}</div>
+                    </li>
+                    <li class="slds-page-header__detail-block">
+                        <div class="header-item orange">Orange</div>
+                        <div class="header-item orange">{! v.count.Orange}</div>
+                    </li>
+                    <li class="slds-page-header__detail-block">
+                        <div class="header-item red">Red</div>
+                        <div class="header-item red">{! v.count.Red}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aura:component>

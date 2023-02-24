@@ -17,7 +17,7 @@ public without sharing class CT_PersonController {
     }
 
     public static List<Person__c> searchPeople(String searchTerm){
-        searchTerm = searchTerm + '%';
+        searchTerm =  '%' + searchTerm + '%';
         return [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c 
                                         FROM Person__c
                                         WHERE Name LIKE :searchTerm OR Mobile__c LIKE :searchTerm OR Token__c LIKE :searchTerm
@@ -85,5 +85,18 @@ public without sharing class CT_PersonController {
         }
         update personListToUpdate;
         System.debug('CT_PersonController.resetToGreen() --' );
+    }
+
+    public static Map<String, Integer> getHealthStatusCountByStatus(){
+        AggregateResult[] healthCountMap = [SELECT Health_Status__c, Count(Id) total FROM Person__c GROUP BY Health_Status__c];
+
+        if(healthCountMap != null && healthCountMap.size() > 0){
+            Map<String, Integer> result = new Map<String,Integer>();
+            for (AggregateResult ar : healthCountMap) {
+                result.put(String.valueOf(ar.get('Health_Status__c')), Integer.valueOf(ar.get('total')));
+            }
+            return result;
+        }
+        return null;
     }
 }

@@ -11,4 +11,4 @@
             <lightning:datatable keyField="id" data="{!v.data}" columns="{! v.columns}" hideCheckboxColumn="true"></lightning:datatable>
         </div>
     </lightning:card>
-</aura:component>	
+</aura:component>

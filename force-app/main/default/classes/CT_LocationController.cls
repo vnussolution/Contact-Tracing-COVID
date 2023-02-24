@@ -130,4 +130,17 @@ public with sharing class CT_LocationController {
         update locationListToUpdate;
         System.debug('CT_LocationController.resetToGreen() --' );
     }
+
+    public static Map<String, Integer> getHealthStatusCountByStatus(){
+        AggregateResult[] healthCountMap = [SELECT Status__c, Count(Id) total FROM Location__c GROUP BY Status__c];
+
+        if(healthCountMap != null && healthCountMap.size() > 0){
+            Map<String, Integer> result = new Map<String,Integer>();
+            for (AggregateResult ar : healthCountMap) {
+                result.put(String.valueOf(ar.get('Status__c')), Integer.valueOf(ar.get('total')));
+            }
+            return result;
+        }
+        return null;
+    }
 }

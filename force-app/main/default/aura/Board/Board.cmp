@@ -32,7 +32,7 @@
         <lightning:layout multipleRows="true">
             <aura:iteration items="{!v.words}" var="wordObj">
                 <lightning:layoutItem size="{!v.blockSize}" padding="around-small">
-                    <c:block aura:id="wordid" label="{!wordObj.word}" open="{!wordObj.open}" ></c:block>
+                    <c:Block aura:id="wordid" label="{!wordObj.word}" open="{!wordObj.open}" ></c:Block>
                 </lightning:layoutItem>
             </aura:iteration>
         </lightning:layout>
@@ -42,4 +42,4 @@
         </aura:if>
         
     </div>
-</aura:component>	
+</aura:component>
